@@ -20,10 +20,10 @@ def pe_ratio():
         "pe_ratio": "hello world"
     }
 
-@stocks.route('/record_trade', methods=['POST'])
-def record_trade():
+@stocks.route('/trade', methods=['POST'])
+def trade():
     return {
-        "record_trade": "hello world"
+        "trade": "hello world"
     }
 
 @stocks.route('/volume_weighted_price', methods=['GET'])
