@@ -31,10 +31,10 @@ class Stock:
 @dataclass
 class Trade:
     timestamp: datetime.datetime
-    symbol: str
-    quantity: int
-    price: float
     trade_type: str
+    symbol: str
+    price: float
+    quantity: int
 
     @property
     def quantity(self) -> int:
