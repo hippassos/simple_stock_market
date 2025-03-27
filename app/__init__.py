@@ -7,7 +7,7 @@ def create_app(config_name):
     config[config_name].init_app(app)
 
     # register blueprints
-    from .stocks import stocks as stocks_blueprint
+    from .stocks import stocks_bp as stocks_blueprint
     app.register_blueprint(stocks_blueprint, url_prefix='/stocks')
 
     return app
