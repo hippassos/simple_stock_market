@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-stocks_bp = Blueprint('stocks', __name__)
+bp = Blueprint('stocks', __name__)
 
-from . import routes, models  # noqa:F401
+from . import routes, models, errors  # noqa:F401
