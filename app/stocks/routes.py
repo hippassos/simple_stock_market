@@ -1,7 +1,9 @@
 import logging
-from . import stocks_bp
+from app.stocks import bp
 from flask import request
 from app.stocks.models import Stock, StockMarket
+from app.stocks.decorators import price_validation
+from app.stocks.errors import error_response
 
 available_stocks = {
     "TEA": Stock("TEA", "Common", 0, 0, 100),
@@ -14,7 +16,7 @@ available_stocks = {
 stock_market = StockMarket([], available_stocks)
 
 
-@stocks_bp.route('/list_stocks', methods=['GET'])
+@bp.route('/list_stocks', methods=['GET'])
 def list_stocks():
     stocks = stock_market.list_stocks()
     return {
@@ -22,41 +24,53 @@ def list_stocks():
     }
 
 
-@stocks_bp.route('/dividend_yield', methods=['GET'])
+@bp.route('/dividend_yield', methods=['GET'])
+@price_validation
 def dividend_yield():
     symbol = request.args.get('symbol')
-    price = float(request.args.get('price', 0))
+    price = int(request.args.get('price', 0))
     stock = stock_market.get_stock(symbol)
     if not stock:
-        logging.warning("Stock not found")
-        return {"error": "Stock not found"}, 404
+        # keep track for future analytics for client needs
+        logging.error(f"Not available stock requested with symbol: {symbol}")
+        return error_response(404, "Stock not found")
+    logging.info(f"Calculating dividend yield for {symbol} at price {price}")
     return {
         "dividend_yield": stock.calculate_dividend_yield(price)
     }
 
 
-@stocks_bp.route('/pe_ratio', methods=['GET'])
+@bp.route('/pe_ratio', methods=['GET'])
+@price_validation
 def pe_ratio():
+    symbol = request.args.get('symbol')
+    price = int(request.args.get('price', 0))
+    stock = stock_market.get_stock(symbol)
+    if not stock:
+        # keep track for future analytics for client needs
+        logging.error(f"Not available stock requested with symbol: {symbol}")
+        return error_response(404, "Stock not found")
+    logging.info(f"Calculating P/E ratio for {symbol} at price {price}")
     return {
-        "pe_ratio": "hello world"
+        "pe_ratio": stock.calculate_pe_ratio(price)
     }
 
 
-@stocks_bp.route('/trade', methods=['POST'])
+@bp.route('/trade', methods=['POST'])
 def trade():
     return {
         "trade": "hello world"
     }
 
 
-@stocks_bp.route('/volume_weighted_price', methods=['GET'])
+@bp.route('/volume_weighted_price', methods=['GET'])
 def volume_weighted_price():
     return {
         "volume_weighted_price": "hello world"
     }
 
 
-@stocks_bp.route('/gbce_index', methods=['GET'])
+@bp.route('/gbce_index', methods=['GET'])
 def gbce_index():
     return {
         "gbce_index": "hello world"

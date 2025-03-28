@@ -2,4 +2,4 @@ from flask import Blueprint
 
 bp = Blueprint('stocks', __name__)
 
-from . import routes, models, errors  # noqa:F401
+from . import routes, models, errors, decorators  # noqa:F401
