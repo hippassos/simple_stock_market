@@ -22,7 +22,7 @@ class Stock:
             return (self.fixed_dividend * self.par_value) / price
 
     def calculate_pe_ratio(self, price: int) -> float:
-        if price <= 0:
+        if price <= 0 or self.last_dividend <= 0:
             return 0
         else:
             return price / self.last_dividend
@@ -41,6 +41,9 @@ class Trade:
 class StockMarket:
     trades: List[Trade] = field(default_factory=list)  # empty list default for a new instance
     stocks: Dict[str, Stock] = field(default_factory=dict)  # empty dict default for a new instance
+
+    def add_stock(self, stock: Stock):
+        self.stocks[stock.symbol] = stock
 
     def get_stock(self, symbol: str):
         return self.stocks.get(symbol)
@@ -76,3 +79,14 @@ class StockMarket:
         except OverflowError as e:
             logging.error(f"GBCE All Share Index overflowed with trace {e}")
             raise
+
+
+available_stocks = {
+    "TEA": Stock("TEA", "Common", 0, 0, 100),
+    "POP": Stock("POP", "Common", 8, 0, 100),
+    "ALE": Stock("ALE", "Common", 23, 0, 60),
+    "GIN": Stock("GIN", "Preferred", 8, 0.2, 100),
+    "JOE": Stock("JOE", "Common", 13, 0, 250)
+}
+
+stock_market = StockMarket([], available_stocks)
