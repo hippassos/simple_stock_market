@@ -236,5 +236,30 @@ The following format of responses are generated when it is required
 }
 ```
 
+## How to call the endpoints
+### Using Curl
+```bash
+curl -X POST http://localhost:5000/trade -H "Content-Type: application/json" -d '{"symbol": "GIN", "quantity": 10, "price": 100, "type": "buy"}'
+```
+
+### Using Python requests
+```python
+import requests
+
+response = requests.get("http://localhost:5000/list_stocks")
+print(response.json())
+```
+
+### Using Postman
+1. Open Postman
+2. Select Import > Upload files
+3. Import the `stock_market.postman_collection.json` 
+
+OR
+1. Open Postman
+2. Select GET or POST request
+3. Enter the URL (e.g., `http://localhost:5000/dividend_yield?symbol=GIN&price=100`)
+4. Click Send
+
 ## License
 This project is licensed under the MIT License.
