@@ -39,8 +39,12 @@ class Trade:
 
 @dataclass
 class StockMarket:
-    trades: List[Trade] = field(default_factory=list)  # empty list default for a new instance
-    stocks: Dict[str, Stock] = field(default_factory=dict)  # empty dict default for a new instance
+    trades: List[Trade] = field(
+        default_factory=list
+    )  # empty list default for a new instance
+    stocks: Dict[str, Stock] = field(
+        default_factory=dict
+    )  # empty dict default for a new instance
 
     def add_stock(self, stock: Stock):
         self.stocks[stock.symbol] = stock
@@ -55,13 +59,23 @@ class StockMarket:
         return self.trades
 
     def trade(self, symbol: str, quantity: int, price: int, trade_type: str):
-        trade = Trade(datetime.datetime.now(datetime.timezone.utc), symbol, quantity, price, trade_type)  # utc aware timestamp
+        trade = Trade(
+            datetime.datetime.now(datetime.timezone.utc),
+            symbol,
+            quantity,
+            price,
+            trade_type,
+        )  # utc aware timestamp
         self.trades.append(trade)
 
     def calculate_volume_weighted_stock_price(self, symbol: str):
         now = datetime.datetime.now(datetime.timezone.utc)  # utc aware timestamp
         # trades in relevant window
-        relevant_trades = [t for t in self.trades if (now - t.timestamp).total_seconds() <= (60 * 15) and t.symbol == symbol]
+        relevant_trades = [
+            t
+            for t in self.trades
+            if (now - t.timestamp).total_seconds() <= (60 * 15) and t.symbol == symbol
+        ]
         # ensure there are trades to work with
         if not relevant_trades:
             return 0
@@ -87,7 +101,7 @@ available_stocks = {
     "POP": Stock("POP", "Common", 8, 0, 100),
     "ALE": Stock("ALE", "Common", 23, 0, 60),
     "GIN": Stock("GIN", "Preferred", 8, 0.2, 100),
-    "JOE": Stock("JOE", "Common", 13, 0, 250)
+    "JOE": Stock("JOE", "Common", 13, 0, 250),
 }
 
 stock_market = StockMarket([], available_stocks)

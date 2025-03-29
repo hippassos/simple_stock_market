@@ -31,48 +31,69 @@ def stock_market():
 # are reading the StockMarket initiated at models.py instead of the fixture.
 def test_route_dividend_yield(client):
     # all good
-    response = client.get(f"/stocks/dividend_yield?symbol={[*available_stocks.keys()][0]}&price=1")
+    response = client.get(
+        f"/stocks/dividend_yield?symbol={[*available_stocks.keys()][0]}&price=1"
+    )
     assert response.status_code == 200
     # missing stock
     response = client.get("/stocks/dividend_yield?symbol=ACME&price=1")
     assert response.status_code == 404
     # price is float type
-    response = client.get(f"/stocks/dividend_yield?symbol={[*available_stocks.keys()][0]}&price=1.1")
+    response = client.get(
+        f"/stocks/dividend_yield?symbol={[*available_stocks.keys()][0]}&price=1.1"
+    )
     assert response.status_code == 400
     # price is negative
-    response = client.get(f"/stocks/dividend_yield?symbol={[*available_stocks.keys()][0]}&price=-1")
+    response = client.get(
+        f"/stocks/dividend_yield?symbol={[*available_stocks.keys()][0]}&price=-1"
+    )
     assert response.status_code == 400
     # price is string type
-    response = client.get(f"/stocks/dividend_yield?symbol={[*available_stocks.keys()][0]}&price=ArtificialRock")
+    response = client.get(
+        f"/stocks/dividend_yield?symbol={[*available_stocks.keys()][0]}&price=ArtificialRock"
+    )
     assert response.status_code == 400
 
 
 def test_route_pe_ratio(client):
     # all good
-    response = client.get(f"/stocks/pe_ratio?symbol={[*available_stocks.keys()][0]}&price=1")
+    response = client.get(
+        f"/stocks/pe_ratio?symbol={[*available_stocks.keys()][0]}&price=1"
+    )
     assert response.status_code == 200
     # missing stock
     response = client.get("/stocks/pe_ratio?symbol=ACME&price=1")
     assert response.status_code == 404
     # price is float type
-    response = client.get(f"/stocks/pe_ratio?symbol={[*available_stocks.keys()][0]}&price=1.1")
+    response = client.get(
+        f"/stocks/pe_ratio?symbol={[*available_stocks.keys()][0]}&price=1.1"
+    )
     assert response.status_code == 400
     # price is negative
-    response = client.get(f"/stocks/pe_ratio?symbol={[*available_stocks.keys()][0]}&price=-1")
+    response = client.get(
+        f"/stocks/pe_ratio?symbol={[*available_stocks.keys()][0]}&price=-1"
+    )
     assert response.status_code == 400
     # price is string type
-    response = client.get(f"/stocks/pe_ratio?symbol={[*available_stocks.keys()][0]}&price=ArtificialRock")
+    response = client.get(
+        f"/stocks/pe_ratio?symbol={[*available_stocks.keys()][0]}&price=ArtificialRock"
+    )
     assert response.status_code == 400
 
 
 def test_route_trade(client):
     # TODO remove hardcodes symbol
-    response = client.post("/stocks/trade", json={"symbol": "GIN", "quantity": 10, "price": 100, "type": "buy"})
+    response = client.post(
+        "/stocks/trade",
+        json={"symbol": "GIN", "quantity": 10, "price": 100, "type": "buy"},
+    )
     assert response.status_code == 200
 
 
 def test_route_volume_weighted_price(client):
-    response = client.get(f"/stocks/volume_weighted_price?symbol={[*available_stocks.keys()][0]}")
+    response = client.get(
+        f"/stocks/volume_weighted_price?symbol={[*available_stocks.keys()][0]}"
+    )
     assert response.status_code == 200
 
 
@@ -93,7 +114,9 @@ def test_route_list_trades(client):
 
 # Test Model Methods
 def test_model_method_stock_methods():
-    stock = Stock(symbol="TEST", type="Common", last_dividend=10, fixed_dividend=0, par_value=100)
+    stock = Stock(
+        symbol="TEST", type="Common", last_dividend=10, fixed_dividend=0, par_value=100
+    )
     assert stock.calculate_dividend_yield(100) == 0.1
     assert stock.calculate_pe_ratio(100) == 10
 
@@ -115,7 +138,9 @@ def test_model_method_gbce_index(stock_market):
 
 def test_model_method_add_stock():
     stock_market = StockMarket()
-    stock = Stock(symbol="TEST", type="Common", last_dividend=10, fixed_dividend=0, par_value=100)
+    stock = Stock(
+        symbol="TEST", type="Common", last_dividend=10, fixed_dividend=0, par_value=100
+    )
     stock_market.add_stock(stock)
     assert stock_market.get_stock("TEST") is not None
     assert len(stock_market.list_stocks()) == 1

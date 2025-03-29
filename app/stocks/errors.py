@@ -6,11 +6,11 @@ from app.stocks import bp
 def error_response(status_code, message=None):
     """Universaly inject short descriptions of HTTP status codes to the error response."""
     payload = {
-        'code': status_code,
-        'error': HTTP_STATUS_CODES.get(status_code, 'Unknown error'),
+        "code": status_code,
+        "error": HTTP_STATUS_CODES.get(status_code, "Unknown error"),
     }
     if message:
-        payload['message'] = message
+        payload["message"] = message
     return payload, status_code
 
 

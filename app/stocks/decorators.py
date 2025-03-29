@@ -8,6 +8,7 @@ from app.stocks.models import stock_market
 def numbers_validated(args_to_validate: list):
     def numeric_validation(f):
         """Assert that a value is a non-negative interger (natural number)."""
+
         @wraps(f)
         def decorated_function(*args, **kwargs):
             for arg in args_to_validate:
@@ -23,12 +24,15 @@ def numbers_validated(args_to_validate: list):
                         logging.error(f"Invalid {arg} input, {value}")
                         return bad_request(error_msgs.get(arg))
             return f(*args, **kwargs)
+
         return decorated_function
+
     return numeric_validation
 
 
 def trade_type_validation(f):
     """Assert that a value is a non-negative interger (natural number)."""
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         value = request.json.get("type")
@@ -36,11 +40,13 @@ def trade_type_validation(f):
             logging.error(f"Invalid trade type input, {value}")
             return bad_request(error_msgs.get("trade_type"))
         return f(*args, **kwargs)
+
     return decorated_function
 
 
 def symbol_validation(f):
     """Assert that a value is a non-negative interger (natural number)."""
+
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if request.method == "GET":
@@ -53,4 +59,5 @@ def symbol_validation(f):
             logging.error(f"Stock requested is not available, {value}")
             return error_response(404, error_msgs.get("symbol"))
         return f(*args, **kwargs)
+
     return decorated_function
