@@ -23,3 +23,10 @@ def bad_request(message):
 def handle_exception(e):
     """Catch-all error handler, usually raised through flask.abort()."""
     return error_response(e.code)
+
+
+error_msgs = {
+    "price": "Price must be a non-negative integer representing the value in pennies",
+    "quantity": "Quantity of stocks must be a a non-negative integer",
+    "trade_type": "Trade type can be either [buy] or [sell]",
+}
