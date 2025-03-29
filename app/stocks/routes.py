@@ -1,4 +1,3 @@
-import logging
 from app.stocks import bp
 from flask import request
 from app.stocks.models import stock_market
@@ -74,6 +73,7 @@ def volume_weighted_price():
 
 @bp.route("/gbce_index", methods=["GET"])
 def gbce_index():
+    idx = stock_market.calculate_gbce_all_share_index()
     return {
-        "gbce_index": "hello world"
+        "gbce_index": idx
     }

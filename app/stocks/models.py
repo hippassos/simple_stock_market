@@ -71,7 +71,8 @@ class StockMarket:
 
     def calculate_gbce_all_share_index(self):
         prices = [t.price for t in self.trades]
-        if not prices:
+        # avoid results over the complex plane
+        if not prices or any(k < 0 for k in prices):
             return 0
         try:
             # go through the arithetic mean of the lns to provide overflow resistance

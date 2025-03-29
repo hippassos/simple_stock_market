@@ -104,11 +104,6 @@ def test_model_method_trade(stock_market):
     assert len(stock_market.trades) == 1
 
 
-def test_model_method_volume_weighted_stock_price(stock_market):
-    stock_market.trade("TEST", 10, 100, "buy")
-    assert stock_market.calculate_volume_weighted_stock_price("TEST") == 100
-
-
 def test_model_method_gbce_index(stock_market):
     stock_market.trade("TEST", 10, 27, "buy")
     stock_market.trade("TEST", 10, 125, "buy")
@@ -124,6 +119,12 @@ def test_model_method_add_stock():
     stock_market.add_stock(stock)
     assert stock_market.get_stock("TEST") is not None
     assert len(stock_market.list_stocks()) == 1
+
+
+def test_model_method_volume_weighted_stock_price(stock_market):
+    stock_market.trade("TEST", 8, 100, "buy")
+    stock_market.trade("TEST", 2, 50, "buy")
+    assert isclose(stock_market.calculate_volume_weighted_stock_price("TEST"), 90.0)
 
 
 def test_model_method_volume_weighted_stock_price_time_filter(stock_market):
