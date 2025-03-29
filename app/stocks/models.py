@@ -58,10 +58,10 @@ class StockMarket:
         trade = Trade(datetime.datetime.now(datetime.timezone.utc), symbol, quantity, price, trade_type)  # utc aware timestamp
         self.trades.append(trade)
 
-    def calculate_volume_weighted_stock_price(self):
+    def calculate_volume_weighted_stock_price(self, symbol: str):
         now = datetime.datetime.now(datetime.timezone.utc)  # utc aware timestamp
         # trades in relevant window
-        relevant_trades = [t for t in self.trades if (now - t.timestamp).total_seconds() <= (60 * 15)]
+        relevant_trades = [t for t in self.trades if (now - t.timestamp).total_seconds() <= (60 * 15) and t.symbol == symbol]
         # ensure there are trades to work with
         if not relevant_trades:
             return 0
