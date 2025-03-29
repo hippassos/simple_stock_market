@@ -8,10 +8,10 @@ def create_app(config_name):
     config[config_name].init_app(app)
 
     # register blueprints
-    from app.errors import bp as errors_bp
+    from app.errors import bp as errors_bp  # fmt: skip
     app.register_blueprint(errors_bp)
 
-    from app.stocks import bp as stocks_bp
-    app.register_blueprint(stocks_bp, url_prefix='/stocks')
+    from app.stocks import bp as stocks_bp  # fmt: skip
+    app.register_blueprint(stocks_bp, url_prefix="/stocks")
 
     return app
