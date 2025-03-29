@@ -173,7 +173,7 @@ Calculates the Price-to-Earnings (P/E) Ratio for a given stock and price.
 ### Trade
 #### Endpoint:
 ```
-POST /stocks//trade
+POST /stocks/trade
 ```
 #### **Description:**
 Records a new trade with details.
