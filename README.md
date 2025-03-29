@@ -105,7 +105,7 @@ Returns a list of all available stocks in the market.
             "symbol": "TEA",
             "type": "Common"
         },
-        {...},
+        ...
     ]
 }
 ```
@@ -129,7 +129,7 @@ Returns a list of all recorded trades.
             "timestamp": "Sat, 29 Mar 2025 22:01:58 GMT",
             "trade_type": "buy"
         },
-        {...},
+        ...
     ]
 }
 ```
