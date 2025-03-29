@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "2f61b7e6-4802-481a-9f9e-141b336c571e",
+		"name": "jpmc",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23399167",
+		"_collection_link": "https://interstellar-eclipse-988721.postman.co/workspace/Ydentifi-workspace~acb1e99d-1f6f-45b4-86da-81849b6bd877/collection/23399167-2f61b7e6-4802-481a-9f9e-141b336c571e?action=share&source=collection_link&creator=23399167"
+	},
+	"item": [
+		{
+			"name": "List stocks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stocks/list_stocks",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stocks",
+						"list_stocks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List trades",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stocks/list_trades",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stocks",
+						"list_trades"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dividend yield",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stocks/dividend_yield?symbol=GIN&price=26",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stocks",
+						"dividend_yield"
+					],
+					"query": [
+						{
+							"key": "symbol",
+							"value": "GIN"
+						},
+						{
+							"key": "price",
+							"value": "26"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PE Ration",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stocks/pe_ratio?symbol=GIN&price=26",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stocks",
+						"pe_ratio"
+					],
+					"query": [
+						{
+							"key": "symbol",
+							"value": "GIN"
+						},
+						{
+							"key": "price",
+							"value": "26"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trade",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"symbol\": \"ALE\",\r\n    \"quantity\": 2,\r\n    \"price\": 41,\r\n    \"type\": \"buy\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/stocks/trade",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stocks",
+						"trade"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "vwp",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stocks/volume_weighted_price?symbol=ALE",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stocks",
+						"volume_weighted_price"
+					],
+					"query": [
+						{
+							"key": "symbol",
+							"value": "ALE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gbce_index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stocks/gbce_index",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stocks",
+						"gbce_index"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
