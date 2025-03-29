@@ -6,5 +6,6 @@ max-line-length = 160
 exclude =
     .git,
     .venv,
+    venv,
     .vscode,
     market.py
