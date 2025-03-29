@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 import datetime
 import math
 import logging
-from typing import Dict
+from typing import Dict, List
 
 
 @dataclass
@@ -13,7 +13,7 @@ class Stock:
     fixed_dividend: float
     par_value: int
 
-    def calculate_dividend_yield(self, price: float) -> float:
+    def calculate_dividend_yield(self, price: int) -> float:
         if price <= 0:
             return 0
         if self.type == "Common":
@@ -21,7 +21,7 @@ class Stock:
         else:
             return (self.fixed_dividend * self.par_value) / price
 
-    def calculate_pe_ratio(self, price: float) -> float:
+    def calculate_pe_ratio(self, price: int) -> float:
         if price <= 0:
             return 0
         else:
@@ -31,24 +31,16 @@ class Stock:
 @dataclass
 class Trade:
     timestamp: datetime.datetime
-    trade_type: str
     symbol: str
-    price: float
     quantity: int
-
-    @property
-    def quantity(self) -> int:
-        return self._quantity
-
-    @quantity.setter
-    def quantity(self, value: int) -> None:
-        self._quantity = max(value, 1)  # cannot trade 0 stocks
+    price: int
+    trade_type: str
 
 
 @dataclass
 class StockMarket:
-    trades: list = field(default_factory=list)
-    stocks: Dict[str, Stock] = field(default_factory=dict)
+    trades: List[Trade] = field(default_factory=list)  # empty list default for a new instance
+    stocks: Dict[str, Stock] = field(default_factory=dict)  # empty dict default for a new instance
 
     def get_stock(self, symbol: str):
         return self.stocks.get(symbol)
@@ -56,10 +48,12 @@ class StockMarket:
     def list_stocks(self):
         return list(self.stocks.values())
 
-    def trade(self, symbol: str, quantity: int, price: float, trade_type: str):
+    def list_trades(self):
+        return self.trades
+
+    def trade(self, symbol: str, quantity: int, price: int, trade_type: str):
         trade = Trade(datetime.datetime.now(datetime.timezone.utc), symbol, quantity, price, trade_type)  # utc aware timestamp
         self.trades.append(trade)
-        logging.info(f"Traded for {symbol}: {quantity} shares at {price}, type: {trade_type}")
 
     def calculate_volume_weighted_stock_price(self):
         now = datetime.datetime.now(datetime.timezone.utc)  # utc aware timestamp
