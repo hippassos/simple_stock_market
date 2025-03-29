@@ -117,8 +117,13 @@ def test_model_method_stock_methods():
     stock = Stock(
         symbol="TEST", type="Common", last_dividend=10, fixed_dividend=0, par_value=100
     )
-    assert stock.calculate_dividend_yield(100) == 0.1
+    assert stock.calculate_dividend_yield(100) == 0.1  # last_dividend / price
     assert stock.calculate_pe_ratio(100) == 10
+
+    pstock = Stock(symbol="TEST", type="Preferred", last_dividend=10, fixed_dividend=0.02, par_value=100)
+    price = 50
+    pexpected_yield = (0.02 * 100) / 50  # (fixed_dividend * par_value) / price
+    assert pstock.calculate_dividend_yield(price) == pexpected_yield
 
 
 def test_model_method_trade(stock_market):
