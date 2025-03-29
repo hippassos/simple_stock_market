@@ -63,9 +63,12 @@ def trade():
 
 
 @bp.route("/volume_weighted_price", methods=["GET"])
+@symbol_validation
 def volume_weighted_price():
+    symbol = request.args.get('symbol')
+    vwp = stock_market.calculate_volume_weighted_stock_price(symbol)
     return {
-        "volume_weighted_price": "hello world"
+        "volume_weighted_price": vwp
     }
 
 
